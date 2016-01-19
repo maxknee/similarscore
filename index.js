@@ -5,6 +5,7 @@ var transform = require('stream-transform');
 
 require('should');
 var output = [];
+var counts = {};
 
 function Order(product, customer) {
   this.Product = product;
@@ -15,22 +16,18 @@ var Orders = [];
 
 var parser = csv.parse({}, function(err, data){
   output.push(data);
-  transformer.write(data);
   for (var i = 0; i < data.length; i++) {
-    Orders.push(data[i]);
+    Orders.push(new Order(data[i][0], data[i][1]));
     console.log(Orders[i]);
   };
+  Orders.shift();
+  console.log(Orders);
+  Orders.forEach(function(x) {
+    counts[x] = (counts[x] || 0) + 1;
+  });
 });
 
-var transformer = csv.transform(function(data){
-  return data.map;
-});
+fs.createReadStream('orders.csv').pipe(parser);
 
-transformer.on('readable', function() {
-  while(row = transformer.read()) {
-    output.push(row);
-  }
-  console.log('this output');
-  console.log(output);
-});
-fs.createReadStream('orders.csv').pipe(transformer).pipe(parser);
+
+console.log(counts);

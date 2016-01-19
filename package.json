@@ -1,0 +1,15 @@
+{
+  "name": "similarscore",
+  "version": "0.1.0",
+  "description": "find the similar score between a series of products",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Max Knee",
+  "license": "MIT",
+  "dependencies": {
+    "csv": "^0.4.6",
+    "csv-parser": "^1.9.1"
+  }
+}

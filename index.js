@@ -18,13 +18,20 @@ var parser = csv.parse({}, function(err, data){
   output.push(data);
   for (var i = 0; i < data.length; i++) {
     Orders.push(new Order(data[i][0], data[i][1]));
-    console.log(Orders[i]);
   };
   Orders.shift();
-  console.log(Orders);
-  Orders.forEach(function(x) {
-    counts[x] = (counts[x] || 0) + 1;
+  console.log(Orders[3].Product);
+  /*
+  Orders.forEach(function(obj) {
+      var key = JSON.stringify(obj);
+      counts[key] = (counts[key] || 0) + 1;
   });
+  */
+  for (var d = 0; d < Orders.length; d++) {
+      var hey = Orders[d].Product
+   counts[hey] = (counts[hey] || 0) + 1;
+  }
+  console.log(counts);
 });
 
 fs.createReadStream('orders.csv').pipe(parser);
